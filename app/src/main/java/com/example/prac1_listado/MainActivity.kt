@@ -49,6 +49,12 @@ class MainActivity : AppCompatActivity() {
         val adapter = AlumnosAdapter(this,data)
         recyclerView.adapter = adapter
 
+        val bt_agregar = findViewById<FloatingActionButton>(R.id.bt_agregar)
+        bt_agregar.setOnClickListener {
+            val intento1 = Intent(this, MainActivityNuevo::class.java)
+            startActivity(intento1)
+        }
+
         val parExtra = intent.extras
         val msje = parExtra?.getString("mensaje")
         val nombre = parExtra?.getString("nombre")
@@ -56,15 +62,12 @@ class MainActivity : AppCompatActivity() {
         val correo = parExtra?.getString("correo")
         val imagen = parExtra?.getString("imagen")
         if (msje == "Nuevo") {
+            val insertedIndex: Int = data.count()
             data.add(AlumnosClass(nombre.toString(), cuenta.toString(), correo.toString(), imagen.toString()))
-            adapter.notifyDataSetChanged()
+            adapter.notifyItemInserted(insertedIndex)
         }
 
-        val bt_agregar = findViewById<FloatingActionButton>(R.id.bt_agregar)
-        bt_agregar.setOnClickListener {
-            val intento1 = Intent(this, MainActivityNuevo::class.java)
-            startActivity(intento1)
-        }
+
 
     }
 
